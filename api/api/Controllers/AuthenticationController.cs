@@ -37,5 +37,22 @@ namespace api.Controllers
 
             return Ok();
         }
+
+        [HttpPost]
+        [Route("login")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult> Login([FromBody] LoginUserDto loginUserDto)
+        {
+            var token = await _authenticationManager.Login(loginUserDto);
+
+            if (token is null)
+            {
+                return Unauthorized();
+            }
+
+            return Ok(token);
+        }
     }
 }

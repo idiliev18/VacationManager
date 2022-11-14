@@ -34,9 +34,28 @@ namespace api.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<AuthenticationResponseDto> Login(LoginUserDto loginDto)
+        public async Task<AuthenticationResponseDto> Login(LoginUserDto loginDto)
         {
-            throw new NotImplementedException();
+            _user = await _userManager.FindByNameAsync(loginDto.Useraname);
+
+            if(_user is null)
+            {
+                return null;
+            }
+
+            var isValidUser = await _userManager.CheckPasswordAsync(_user, loginDto.Password);
+
+            if(!isValidUser)
+            {
+                return null;
+            }
+
+            return new AuthenticationResponseDto
+            {
+                UserId = _user.Id,
+                Token = await GenerateToken(),
+                RefreshToken = "Coming Soon"
+            };
         }
 
         public async Task<IEnumerable<IdentityError>> RegisterUser(RegisterUserDto userDto)
