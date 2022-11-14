@@ -6,10 +6,6 @@ namespace api.Data.Configurations
 {
     public class RoleConfiguration : IEntityTypeConfiguration<IdentityRole>
     {
-        public RoleConfiguration(DbContextOptions option) : base(option)
-        {
-
-        }
 
         public void Configure(EntityTypeBuilder<IdentityRole> builder)
         {

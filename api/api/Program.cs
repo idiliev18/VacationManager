@@ -1,4 +1,7 @@
+using api.Configurations;
+using api.Contracts;
 using api.Data;
+using api.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +36,9 @@ namespace api
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
+            builder.Services.AddScoped<IAuthenticationManager, AuthenticationManager>(); 
+
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -50,6 +56,15 @@ namespace api
                     ValidAudience = builder.Configuration["JwtSettings:Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Key"]))
                 };
+            });
+
+            // CORS
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    p => p.AllowAnyHeader()
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod());
             });
 
             var app = builder.Build();

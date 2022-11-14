@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace api.Contracts
 {
-    public interface IAuthManager
+    public interface IAuthenticationManager
     {
-        Task<IEnumerable<IdentityError>> RegisterUser(UserDto userDto);
+        Task<IEnumerable<IdentityError>> RegisterUser(RegisterUserDto userDto);
 
         Task<AuthenticationResponseDto> Login(LoginUserDto loginDto);
 
