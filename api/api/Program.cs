@@ -1,3 +1,10 @@
+using api.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
 namespace api
 {
     public class Program
@@ -6,12 +13,44 @@ namespace api
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            // Add services to the container
+            var connectionString = builder.Configuration.GetConnectionString("APICourseConnectionString");
+            builder.Services.AddDbContext<VacationManagerDbContext>(options =>
+            {
+                options.UseSqlServer(connectionString);
+            });
+
+
+            builder.Services.AddIdentityCore<User>()
+                .AddRoles<IdentityRole>()
+                .AddTokenProvider<DataProtectorTokenProvider<User>>("VacationManager")
+                .AddEntityFrameworkStores<VacationManagerDbContext>()
+                .AddDefaultTokenProviders();
+
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero,
+                    ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+                    ValidAudience = builder.Configuration["JwtSettings:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Key"]))
+                };
+            });
 
             var app = builder.Build();
 
@@ -24,8 +63,9 @@ namespace api
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            app.UseAuthentication();
 
+            app.UseAuthorization();
 
             app.MapControllers();
 
