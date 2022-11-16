@@ -1,4 +1,6 @@
-﻿namespace api.Data
+﻿using api.Data.Models.Mapping;
+
+namespace api.Data.Models
 {
     public class Team
     {

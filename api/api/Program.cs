@@ -1,6 +1,7 @@
 using api.Configurations;
 using api.Contracts;
 using api.Data;
+using api.Data.Models;
 using api.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;

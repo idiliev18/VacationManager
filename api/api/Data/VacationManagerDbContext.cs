@@ -1,4 +1,6 @@
 ﻿using api.Data.Configurations;
+using api.Data.Models;
+using api.Data.Models.Mapping;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;

@@ -1,5 +1,5 @@
 ﻿using api.Contracts;
-using api.Models.Dto.User;
+using api.Dto.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

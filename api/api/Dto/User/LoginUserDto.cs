@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace api.Models.Dto.User
+namespace api.Dto.User
 {
     public class LoginUserDto
     {

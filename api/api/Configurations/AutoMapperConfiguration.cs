@@ -1,5 +1,5 @@
-﻿using api.Data;
-using api.Models.Dto.User;
+﻿using api.Data.Models;
+using api.Dto.User;
 using AutoMapper;
 using System.Diagnostics.Metrics;
 

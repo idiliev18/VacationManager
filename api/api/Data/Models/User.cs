@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Diagnostics;
 
-namespace api.Data
+namespace api.Data.Models
 {
     public class User : IdentityUser
     {

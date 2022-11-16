@@ -1,4 +1,4 @@
-﻿using api.Models.Dto.User;
+﻿using api.Dto.User;
 using Microsoft.AspNetCore.Identity;
 
 namespace api.Contracts
