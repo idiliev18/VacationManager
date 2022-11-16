@@ -12,9 +12,15 @@ namespace api.Data
 
         }
 
+        DbSet<Team> Teams { get; set; }
+        DbSet<Project> Projects { get; set; }
+        DbSet<ProjectTeam> ProjectTeams { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new RoleConfiguration());
+
+            modelBuilder.Entity<ProjectTeam>().HasKey(pt => new { pt.TeamId, pt.ProjectId });
             base.OnModelCreating(modelBuilder);
         }
     }

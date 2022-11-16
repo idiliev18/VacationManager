@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Diagnostics;
 
 namespace api.Data
 {
@@ -7,5 +8,10 @@ namespace api.Data
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
+
+        public int TeamId { get; set; }
+
+        public Team Team { get; set; }
+
     }
 }
