@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 using System.Text;
 
 namespace api
@@ -58,6 +59,13 @@ namespace api
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Key"]))
                 };
             });
+
+
+            builder.Host.UseSerilog((context, loggerConfiguration) =>
+            {
+                loggerConfiguration.WriteTo.Console().ReadFrom.Configuration(context.Configuration);
+            });
+
 
             // CORS
             builder.Services.AddCors(options =>

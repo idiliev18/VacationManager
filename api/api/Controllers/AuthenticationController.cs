@@ -10,10 +10,12 @@ namespace api.Controllers
     public class AuthenticationController : ControllerBase
     {
         private readonly IAuthenticationManager _authenticationManager;
+        private readonly ILogger _logger;
 
-        public AuthenticationController(IAuthenticationManager authenticationManager)
+        public AuthenticationController(IAuthenticationManager authenticationManager, ILogger<AuthenticationController> logger)
         {
             _authenticationManager = authenticationManager;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -24,7 +26,8 @@ namespace api.Controllers
         public async Task<ActionResult> Register([FromBody] RegisterUserDto registerUserDto)
         {
             var errors = await _authenticationManager.RegisterUser(registerUserDto);
-
+            _logger.LogInformation($"Kondio {registerUserDto.Useraname}");
+            
             if(errors.Any())
             {
                 foreach (var error in errors)

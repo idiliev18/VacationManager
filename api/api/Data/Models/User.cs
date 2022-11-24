@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper.Configuration.Annotations;
+using Microsoft.AspNetCore.Identity;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace api.Data.Models
 {
@@ -8,10 +10,5 @@ namespace api.Data.Models
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
-
-        public int TeamId { get; set; }
-
-        public Team Team { get; set; }
-
     }
 }
