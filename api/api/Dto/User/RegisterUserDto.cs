@@ -1,4 +1,7 @@
-﻿namespace api.Dto.User
+﻿using Microsoft.Build.Framework;
+using System.ComponentModel.DataAnnotations;
+
+namespace api.Dto.User
 {
     public class RegisterUserDto : LoginUserDto
     {

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Data;
 
@@ -11,9 +12,10 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(VacationManagerDbContext))]
-    partial class VacationManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221125075208_Buga")]
+    partial class Buga
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,40 +23,6 @@ namespace api.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("api.Data.Models.Mapping.ProjectTeam", b =>
-                {
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TeamId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProjectId", "TeamId");
-
-                    b.HasIndex("TeamId");
-
-                    b.ToTable("ProjectsTeams");
-                });
-
-            modelBuilder.Entity("api.Data.Models.Project", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Project");
-                });
 
             modelBuilder.Entity("api.Data.Models.Team", b =>
                 {
@@ -177,29 +145,29 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "4b40b007-b1ca-4012-aaf5-89bf0ca83abc",
-                            ConcurrencyStamp = "801ae394-bf8b-46bc-91d7-54f4e6aae345",
+                            Id = "39d0bc99-84ba-472e-8a2c-39c2f69b0044",
+                            ConcurrencyStamp = "9d9190a8-56c3-4afc-bf61-f1d21dfd588c",
                             Name = "CEO",
                             NormalizedName = "CEO"
                         },
                         new
                         {
-                            Id = "512ebdbb-91bd-4470-b80f-de196264c1bd",
-                            ConcurrencyStamp = "4c6e0795-b584-4c37-8f1b-d2c566a2ba8b",
+                            Id = "c92c856a-f17c-4d41-a104-8082d5f47c9b",
+                            ConcurrencyStamp = "35637095-843d-42f7-89ec-4ef8fdb6bdc0",
                             Name = "Team Lead",
                             NormalizedName = "TEAM LEAD"
                         },
                         new
                         {
-                            Id = "7abdb2ea-df1d-48e5-b3f6-3acdfdf90ae6",
-                            ConcurrencyStamp = "3ae7f647-55dd-4403-8a29-655d21455ddc",
+                            Id = "818ac76f-87ee-430c-b86a-49cd786374f2",
+                            ConcurrencyStamp = "16565a04-e7fd-433c-af6d-dadd94641dfb",
                             Name = "Developer",
                             NormalizedName = "DEVELOPER"
                         },
                         new
                         {
-                            Id = "8087a458-761e-4489-8a33-617082be2591",
-                            ConcurrencyStamp = "1c1eac2d-86ef-4e4f-8e2c-7341538f186d",
+                            Id = "71ef4814-5def-4e9d-9419-c0b49e9f496e",
+                            ConcurrencyStamp = "b0eb506e-87c0-4c15-b05c-424c4c31e630",
                             Name = "Unassigned",
                             NormalizedName = "UNASSIGNED"
                         });
@@ -311,32 +279,11 @@ namespace api.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("api.Data.Models.Mapping.ProjectTeam", b =>
-                {
-                    b.HasOne("api.Data.Models.Project", "Project")
-                        .WithMany("ProjectTeams")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("api.Data.Models.Team", "Team")
-                        .WithMany("TeamProjects")
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Project");
-
-                    b.Navigation("Team");
-                });
-
             modelBuilder.Entity("api.Data.Models.User", b =>
                 {
-                    b.HasOne("api.Data.Models.Team", "Team")
+                    b.HasOne("api.Data.Models.Team", null)
                         .WithMany("Users")
                         .HasForeignKey("TeamId");
-
-                    b.Navigation("Team");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -390,15 +337,8 @@ namespace api.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("api.Data.Models.Project", b =>
-                {
-                    b.Navigation("ProjectTeams");
-                });
-
             modelBuilder.Entity("api.Data.Models.Team", b =>
                 {
-                    b.Navigation("TeamProjects");
-
                     b.Navigation("Users");
                 });
 #pragma warning restore 612, 618

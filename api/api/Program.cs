@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace api
 {
@@ -25,6 +26,8 @@ namespace api
                 options.UseSqlServer(connectionString);
             });
 
+            builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
             builder.Services.AddIdentityCore<User>()
                 .AddRoles<IdentityRole>()
@@ -39,7 +42,9 @@ namespace api
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
-            builder.Services.AddScoped<IAuthenticationManager, AuthenticationManager>(); 
+            builder.Services.AddScoped<IAuthenticationManager, AuthenticationManager>();
+            builder.Services.AddScoped<IUsersManager, UsersManager>();
+            builder.Services.AddScoped<ITeamsRepository, TeamsRepository>();
 
             builder.Services.AddAuthentication(options =>
             {

@@ -62,6 +62,7 @@ namespace api.Repositories
         {
             _user = _mapper.Map<User>(userDto);
             _user.UserName = userDto.Useraname;
+            _user.TeamId = null;
 
             var result = await _userManager.CreateAsync(_user, userDto.Password);
 

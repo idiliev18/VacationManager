@@ -1,4 +1,6 @@
-﻿using api.Data.Models;
+﻿using api.Controllers;
+using api.Data.Models;
+using api.Dto.Team;
 using api.Dto.User;
 using AutoMapper;
 using System.Diagnostics.Metrics;
@@ -12,6 +14,9 @@ namespace api.Configurations
  
             CreateMap<User, LoginUserDto>().ReverseMap();
             CreateMap<User, RegisterUserDto>().ReverseMap();
+
+            CreateMap<Team, CreateTeamDto>().ReverseMap();
+            CreateMap<Team, TeamDto>().ReverseMap();
         }
     }
 }

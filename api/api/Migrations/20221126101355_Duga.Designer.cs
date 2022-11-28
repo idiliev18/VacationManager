@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Data;
 
@@ -11,9 +12,10 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(VacationManagerDbContext))]
-    partial class VacationManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221126101355_Duga")]
+    partial class Duga
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -177,29 +179,29 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "4b40b007-b1ca-4012-aaf5-89bf0ca83abc",
-                            ConcurrencyStamp = "801ae394-bf8b-46bc-91d7-54f4e6aae345",
+                            Id = "e60ee28a-5ab2-44d9-8921-df577e529025",
+                            ConcurrencyStamp = "4d92423f-ae23-43b8-a73d-a11124a99695",
                             Name = "CEO",
                             NormalizedName = "CEO"
                         },
                         new
                         {
-                            Id = "512ebdbb-91bd-4470-b80f-de196264c1bd",
-                            ConcurrencyStamp = "4c6e0795-b584-4c37-8f1b-d2c566a2ba8b",
+                            Id = "9242ca05-276a-4623-8d0a-c6dd7e8d437d",
+                            ConcurrencyStamp = "80e88212-b87f-4dde-98ca-bd58bc76b913",
                             Name = "Team Lead",
                             NormalizedName = "TEAM LEAD"
                         },
                         new
                         {
-                            Id = "7abdb2ea-df1d-48e5-b3f6-3acdfdf90ae6",
-                            ConcurrencyStamp = "3ae7f647-55dd-4403-8a29-655d21455ddc",
+                            Id = "bc840fa2-6f17-4b75-88b7-0df0fa123dde",
+                            ConcurrencyStamp = "7ce830e6-ea6c-494d-a3f7-86df59519dbf",
                             Name = "Developer",
                             NormalizedName = "DEVELOPER"
                         },
                         new
                         {
-                            Id = "8087a458-761e-4489-8a33-617082be2591",
-                            ConcurrencyStamp = "1c1eac2d-86ef-4e4f-8e2c-7341538f186d",
+                            Id = "87e5349f-e49e-4cc6-8100-b65eb344b1ad",
+                            ConcurrencyStamp = "87b60fbf-9e95-4730-a59a-501260cbf493",
                             Name = "Unassigned",
                             NormalizedName = "UNASSIGNED"
                         });

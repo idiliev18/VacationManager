@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Data;
 
@@ -11,9 +12,10 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(VacationManagerDbContext))]
-    partial class VacationManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221128132027_Nugga")]
+    partial class Nugga
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,7 +125,7 @@ namespace api.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TeamId")
+                    b.Property<int>("TeamId")
                         .HasColumnType("int");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -177,29 +179,29 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "4b40b007-b1ca-4012-aaf5-89bf0ca83abc",
-                            ConcurrencyStamp = "801ae394-bf8b-46bc-91d7-54f4e6aae345",
+                            Id = "f3f74338-53ae-4a22-b474-be05812973ee",
+                            ConcurrencyStamp = "05954e28-b865-4b7f-b951-260c4784809f",
                             Name = "CEO",
                             NormalizedName = "CEO"
                         },
                         new
                         {
-                            Id = "512ebdbb-91bd-4470-b80f-de196264c1bd",
-                            ConcurrencyStamp = "4c6e0795-b584-4c37-8f1b-d2c566a2ba8b",
+                            Id = "9658b8f8-cedf-48ae-821a-b06836bc17e5",
+                            ConcurrencyStamp = "72313fd5-13cd-4560-b58d-4cc7489557f4",
                             Name = "Team Lead",
                             NormalizedName = "TEAM LEAD"
                         },
                         new
                         {
-                            Id = "7abdb2ea-df1d-48e5-b3f6-3acdfdf90ae6",
-                            ConcurrencyStamp = "3ae7f647-55dd-4403-8a29-655d21455ddc",
+                            Id = "737384d1-916e-4b47-9055-3da1efb8f374",
+                            ConcurrencyStamp = "1abbf255-5065-4065-90b8-8da763242dad",
                             Name = "Developer",
                             NormalizedName = "DEVELOPER"
                         },
                         new
                         {
-                            Id = "8087a458-761e-4489-8a33-617082be2591",
-                            ConcurrencyStamp = "1c1eac2d-86ef-4e4f-8e2c-7341538f186d",
+                            Id = "67f60b80-7ea4-42fb-ad28-229b6b28886a",
+                            ConcurrencyStamp = "c2b7cf4b-72b0-4631-8300-99b34485380c",
                             Name = "Unassigned",
                             NormalizedName = "UNASSIGNED"
                         });
@@ -334,7 +336,9 @@ namespace api.Migrations
                 {
                     b.HasOne("api.Data.Models.Team", "Team")
                         .WithMany("Users")
-                        .HasForeignKey("TeamId");
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Team");
                 });
