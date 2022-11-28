@@ -12,8 +12,8 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(VacationManagerDbContext))]
-    [Migration("20221125075208_Buga")]
-    partial class Buga
+    [Migration("20221128151136_Rela")]
+    partial class Rela
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,25 @@ namespace api.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("api.Data.Models.Project", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Project");
+                });
 
             modelBuilder.Entity("api.Data.Models.Team", b =>
                 {
@@ -145,29 +164,29 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "39d0bc99-84ba-472e-8a2c-39c2f69b0044",
-                            ConcurrencyStamp = "9d9190a8-56c3-4afc-bf61-f1d21dfd588c",
+                            Id = "61561b42-7070-4cef-844e-a9dbcc53f798",
+                            ConcurrencyStamp = "e85208c4-c735-45df-bc50-be8c7b04b1f8",
                             Name = "CEO",
                             NormalizedName = "CEO"
                         },
                         new
                         {
-                            Id = "c92c856a-f17c-4d41-a104-8082d5f47c9b",
-                            ConcurrencyStamp = "35637095-843d-42f7-89ec-4ef8fdb6bdc0",
+                            Id = "0553f10f-0ee8-4bb0-b2d1-152b0d2ed4e8",
+                            ConcurrencyStamp = "f79bc62c-a3bb-4231-8d06-fe3e060e11dd",
                             Name = "Team Lead",
                             NormalizedName = "TEAM LEAD"
                         },
                         new
                         {
-                            Id = "818ac76f-87ee-430c-b86a-49cd786374f2",
-                            ConcurrencyStamp = "16565a04-e7fd-433c-af6d-dadd94641dfb",
+                            Id = "176db17b-3f49-40c8-9812-f0d7d2fb17e8",
+                            ConcurrencyStamp = "9e413f66-2309-44a6-b3b3-f74648ae95de",
                             Name = "Developer",
                             NormalizedName = "DEVELOPER"
                         },
                         new
                         {
-                            Id = "71ef4814-5def-4e9d-9419-c0b49e9f496e",
-                            ConcurrencyStamp = "b0eb506e-87c0-4c15-b05c-424c4c31e630",
+                            Id = "2427a4b5-1857-4773-9d68-26158f6ea292",
+                            ConcurrencyStamp = "72ecbaeb-9942-4a01-b23f-1af1acf338fc",
                             Name = "Unassigned",
                             NormalizedName = "UNASSIGNED"
                         });
@@ -279,11 +298,28 @@ namespace api.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("ProjectTeam", b =>
+                {
+                    b.Property<int>("ProjectsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeamsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProjectsId", "TeamsId");
+
+                    b.HasIndex("TeamsId");
+
+                    b.ToTable("ProjectTeam");
+                });
+
             modelBuilder.Entity("api.Data.Models.User", b =>
                 {
-                    b.HasOne("api.Data.Models.Team", null)
+                    b.HasOne("api.Data.Models.Team", "Team")
                         .WithMany("Users")
                         .HasForeignKey("TeamId");
+
+                    b.Navigation("Team");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -333,6 +369,21 @@ namespace api.Migrations
                     b.HasOne("api.Data.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ProjectTeam", b =>
+                {
+                    b.HasOne("api.Data.Models.Project", null)
+                        .WithMany()
+                        .HasForeignKey("ProjectsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("api.Data.Models.Team", null)
+                        .WithMany()
+                        .HasForeignKey("TeamsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

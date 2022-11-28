@@ -45,6 +45,7 @@ namespace api
             builder.Services.AddScoped<IAuthenticationManager, AuthenticationManager>();
             builder.Services.AddScoped<IUsersManager, UsersManager>();
             builder.Services.AddScoped<ITeamsRepository, TeamsRepository>();
+            builder.Services.AddScoped<IProjectsRepository, ProjectsRepository>();
 
             builder.Services.AddAuthentication(options =>
             {

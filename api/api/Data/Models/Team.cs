@@ -8,7 +8,7 @@ namespace api.Data.Models
         public string Name { get; set; }
 
         public ICollection<User> Users { get; set; }
-        public ICollection<ProjectTeam> TeamProjects { get; set; }
+        public ICollection<Project> Projects { get; set; }
 
     }
 }

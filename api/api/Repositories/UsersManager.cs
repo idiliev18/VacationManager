@@ -14,7 +14,7 @@ namespace api.Repositories
             _userManager = userManager;
         }
 
-        public async Task<User> GetUserAsync(string id)
+        public async Task<User> GetAsync(string id)
         {
             if (id is null)
             {

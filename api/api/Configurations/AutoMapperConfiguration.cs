@@ -1,5 +1,6 @@
 ﻿using api.Controllers;
 using api.Data.Models;
+using api.Dto.Projects;
 using api.Dto.Team;
 using api.Dto.User;
 using AutoMapper;
@@ -17,6 +18,8 @@ namespace api.Configurations
 
             CreateMap<Team, CreateTeamDto>().ReverseMap();
             CreateMap<Team, TeamDto>().ReverseMap();
+
+            CreateMap<Project, CreateProjectDto>().ReverseMap();
         }
     }
 }

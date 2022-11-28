@@ -14,6 +14,7 @@ using api.Contracts;
 using AutoMapper;
 using System.Diagnostics.Metrics;
 using api.Dto.User;
+using api.Dto.Projects;
 
 namespace api.Controllers
 {
@@ -24,17 +25,20 @@ namespace api.Controllers
         private readonly ILogger<TeamsController> _logger;
         private readonly ITeamsRepository _teamsRepository;
         private readonly IUsersManager _usersManager;
+        private readonly VacationManagerDbContext _context;
         private readonly IMapper _mapper;
 
         public TeamsController(ILogger<TeamsController> logger,
                                ITeamsRepository teamsRepository,
                                IUsersManager usersManager,
-                               IMapper mapper)
+                               IMapper mapper,
+                               VacationManagerDbContext context)
         {
             _logger = logger;
             _teamsRepository = teamsRepository;
             _mapper = mapper;
             _usersManager = usersManager;
+            _context = context;
         }
 
         // GET: api/Teams
@@ -51,7 +55,7 @@ namespace api.Controllers
                     Id = team.Id,
                     Name = team.Name,
                     MemberCount = team.Users.Count,
-                    ProjectCount = team.TeamProjects.Count
+                    ProjectCount = team.Projects.Count
                 });
             }
 
@@ -69,10 +73,26 @@ namespace api.Controllers
                 return NotFound();
             }
 
-            var users = new List<UserDetailDto>();
+            var users = await GetUsersFromTeam(team);
+            var projects = GetProjectsFromTeam(team);
+
+            var record = new TeamDto
+            {
+                Id = team.Id,
+                Name = team.Name,
+                Users = users,
+                Projects = projects
+            };
+
+            return Ok(record);
+        }
+
+        private async Task<List<UserDetailDto>> GetUsersFromTeam(Team team)
+        {
+            var result = new List<UserDetailDto>();
             foreach (var user in team.Users)
             {
-                users.Add(new UserDetailDto()
+                result.Add(new UserDetailDto()
                 {
                     Id = user.Id,
                     FirstName = user.FirstName,
@@ -82,14 +102,23 @@ namespace api.Controllers
                 });
             }
 
-            var record = new TeamDto
-            {
-                Id = team.Id,
-                Name = team.Name,
-                Users = users
-            };
+            return result;
+        }
 
-            return Ok(record);
+        private List<ProjectDetailDto> GetProjectsFromTeam(Team team)
+        {
+            var result = new List<ProjectDetailDto>();
+            foreach (var project in team.Projects)
+            {
+                result.Add(new ProjectDetailDto()
+                {
+                    Id = project.Id,
+                    Name = project.Name,
+                    Description = project.Description
+                });
+            }
+
+            return result;
         }
 
         // PUT: api/Teams/5
@@ -156,7 +185,7 @@ namespace api.Controllers
             _logger.LogInformation($"{assignUserDto.TeamId} {assignUserDto.UserId}");
 
             var team = await _teamsRepository.GetAsync(assignUserDto.TeamId);
-            var user = await _usersManager.GetUserAsync(assignUserDto.UserId);
+            var user = await _usersManager.GetAsync(assignUserDto.UserId);
 
             if (team is null || user is null)
             {
@@ -174,14 +203,14 @@ namespace api.Controllers
             _logger.LogInformation($"{assignUserDto.TeamId} {assignUserDto.UserId}");
 
             var team = await _teamsRepository.GetAsync(assignUserDto.TeamId);
-            var user = await _usersManager.GetUserAsync(assignUserDto.UserId);
+            var user = await _usersManager.GetAsync(assignUserDto.UserId);
 
             if (team is null || user is null)
             {
                 return NotFound();
             }
 
-            _logger.LogInformation($"Trying to assign user: {user.UserName} to team: {team.Name}");
+            _logger.LogInformation($"Trying to remove user: {user.UserName} from team: {team.Name}");
 
             return Ok(await _teamsRepository.RemoveUser(user, team));
         }

@@ -17,7 +17,7 @@ namespace api.Data
         }
 
         public DbSet<Team> Teams { get; set; }
-        public DbSet<ProjectTeam> ProjectsTeams { get; set; }
+        public DbSet<Project> Projects { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -25,22 +25,10 @@ namespace api.Data
             .HasMany(c => c.Users)
             .WithOne(e => e.Team);
 
-            modelBuilder.Entity<ProjectTeam>()
-                .HasKey(pt => new { pt.ProjectId, pt.TeamId });
-
-            modelBuilder.Entity<ProjectTeam>()
-                .HasOne(pt => pt.Project)
-                .WithMany(p => p.ProjectTeams)
-                .HasForeignKey(pt => pt.ProjectId);
-
-            modelBuilder.Entity<ProjectTeam>()
-                .HasOne(pt => pt.Team)
-                .WithMany(t => t.TeamProjects)
-                .HasForeignKey(pt => pt.TeamId);
-
-
             modelBuilder.ApplyConfiguration(new RoleConfiguration());
             base.OnModelCreating(modelBuilder);
         }
+
+        public DbSet<api.Data.Models.Project> Project { get; set; }
     }
 }

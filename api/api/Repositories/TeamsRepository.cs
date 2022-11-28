@@ -17,7 +17,7 @@ namespace api.Repositories
         {
             return await _context.Teams
                        .Include(s => s.Users)
-                       .Include(x => x.TeamProjects)
+                       .Include(x => x.Projects)
                        .ToListAsync();
         }
 
@@ -41,6 +41,7 @@ namespace api.Repositories
         {
             return await _context.Teams
                 .Include(q => q.Users)
+                .Include(a => a.Projects)
                 .FirstOrDefaultAsync(q => q.Id == id);
         }
 

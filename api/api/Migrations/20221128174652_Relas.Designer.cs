@@ -12,8 +12,8 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(VacationManagerDbContext))]
-    [Migration("20221126101355_Duga")]
-    partial class Duga
+    [Migration("20221128174652_Relas")]
+    partial class Relas
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,21 +23,6 @@ namespace api.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("api.Data.Models.Mapping.ProjectTeam", b =>
-                {
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TeamId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProjectId", "TeamId");
-
-                    b.HasIndex("TeamId");
-
-                    b.ToTable("ProjectsTeams");
-                });
 
             modelBuilder.Entity("api.Data.Models.Project", b =>
                 {
@@ -51,6 +36,7 @@ namespace api.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -179,29 +165,29 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "e60ee28a-5ab2-44d9-8921-df577e529025",
-                            ConcurrencyStamp = "4d92423f-ae23-43b8-a73d-a11124a99695",
+                            Id = "bd3a9e27-2bdf-4a65-a0e0-0b1f61abd21e",
+                            ConcurrencyStamp = "1b3936ef-507f-4135-b684-9368c3f6095f",
                             Name = "CEO",
                             NormalizedName = "CEO"
                         },
                         new
                         {
-                            Id = "9242ca05-276a-4623-8d0a-c6dd7e8d437d",
-                            ConcurrencyStamp = "80e88212-b87f-4dde-98ca-bd58bc76b913",
+                            Id = "9de0d091-aae1-41cb-9aa6-f5fdcfead523",
+                            ConcurrencyStamp = "eb0c0a09-da96-4c2a-968d-205d696e782f",
                             Name = "Team Lead",
                             NormalizedName = "TEAM LEAD"
                         },
                         new
                         {
-                            Id = "bc840fa2-6f17-4b75-88b7-0df0fa123dde",
-                            ConcurrencyStamp = "7ce830e6-ea6c-494d-a3f7-86df59519dbf",
+                            Id = "5a193a0a-a69c-4e3a-84c5-3a3a3515567a",
+                            ConcurrencyStamp = "56ca4e47-438d-4385-93ed-06b4601d2551",
                             Name = "Developer",
                             NormalizedName = "DEVELOPER"
                         },
                         new
                         {
-                            Id = "87e5349f-e49e-4cc6-8100-b65eb344b1ad",
-                            ConcurrencyStamp = "87b60fbf-9e95-4730-a59a-501260cbf493",
+                            Id = "6deb4c1a-d662-4b09-84b3-47fef3bd7a91",
+                            ConcurrencyStamp = "6717e29f-1d0d-433f-b338-a5a2651a37aa",
                             Name = "Unassigned",
                             NormalizedName = "UNASSIGNED"
                         });
@@ -313,23 +299,19 @@ namespace api.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("api.Data.Models.Mapping.ProjectTeam", b =>
+            modelBuilder.Entity("ProjectTeam", b =>
                 {
-                    b.HasOne("api.Data.Models.Project", "Project")
-                        .WithMany("ProjectTeams")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("ProjectsId")
+                        .HasColumnType("int");
 
-                    b.HasOne("api.Data.Models.Team", "Team")
-                        .WithMany("TeamProjects")
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("TeamsId")
+                        .HasColumnType("int");
 
-                    b.Navigation("Project");
+                    b.HasKey("ProjectsId", "TeamsId");
 
-                    b.Navigation("Team");
+                    b.HasIndex("TeamsId");
+
+                    b.ToTable("ProjectTeam");
                 });
 
             modelBuilder.Entity("api.Data.Models.User", b =>
@@ -392,15 +374,23 @@ namespace api.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("api.Data.Models.Project", b =>
+            modelBuilder.Entity("ProjectTeam", b =>
                 {
-                    b.Navigation("ProjectTeams");
+                    b.HasOne("api.Data.Models.Project", null)
+                        .WithMany()
+                        .HasForeignKey("ProjectsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("api.Data.Models.Team", null)
+                        .WithMany()
+                        .HasForeignKey("TeamsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("api.Data.Models.Team", b =>
                 {
-                    b.Navigation("TeamProjects");
-
                     b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
