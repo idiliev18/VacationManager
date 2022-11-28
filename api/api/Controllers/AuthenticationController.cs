@@ -39,6 +39,8 @@ namespace api.Controllers
             }
 
             return Ok();
+        
+        
         }
 
         [HttpPost]
@@ -57,5 +59,7 @@ namespace api.Controllers
 
             return Ok(token);
         }
+
+
     }
 }

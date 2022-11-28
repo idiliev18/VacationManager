@@ -2,6 +2,9 @@
 using api.Data.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Specialized;
+using System.ComponentModel;
 
 namespace api.Repositories
 {
@@ -30,6 +33,16 @@ namespace api.Repositories
             var roles =  await _userManager.GetRolesAsync(user);
 
             return roles[0];
+        }
+
+        public async Task<List<User>> GetAllAsync()
+        {
+            return await _userManager.Users.ToListAsync();
+        }
+
+        public async Task<User> GetByUsernameAsync(string username)
+        {
+            return await _userManager.FindByEmailAsync(username);
         }
     }
 }

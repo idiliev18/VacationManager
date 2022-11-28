@@ -1,6 +1,5 @@
 ﻿using api.Data.Configurations;
 using api.Data.Models;
-using api.Data.Models.Mapping;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

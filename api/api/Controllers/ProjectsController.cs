@@ -149,7 +149,6 @@ namespace api.Controllers
 
         // DELETE: api/Projects/5
         [HttpDelete("{id}")]
-        [Authorize(Roles = "CEO")]
         public async Task<IActionResult> DeleteProject(int id)
         {
             var project = await _projectsRepository.GetAsync(id);
