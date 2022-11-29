@@ -73,14 +73,28 @@ namespace api
             });
 
 
-            // CORS
+            //// CORS
+            //builder.Services.AddCors(options =>
+            //{
+            //    options.AddPolicy("AllowAngularDevClient",
+            //        b =>
+            //        {
+            //            b
+            //                .WithOrigins("http://localhost:4200")
+            //                .AllowAnyHeader()
+            //                .AllowAnyMethod();
+            //        });
+            //});
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("AllowAll",
-                    p => p.AllowAnyHeader()
-                    .AllowAnyOrigin()
-                    .AllowAnyMethod());
+                options.AddPolicy(
+                  "CorsPolicy",
+                  builder => builder.WithOrigins("http://localhost:4200")
+                  .AllowAnyMethod()
+                  .AllowAnyHeader()
+                  .AllowCredentials());
             });
+
 
             var app = builder.Build();
 
@@ -90,6 +104,7 @@ namespace api
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            app.UseCors("CorsPolicy");
 
             app.UseHttpsRedirection();
 

@@ -4,6 +4,8 @@ using api.Dto.Team;
 using api.Dto.User;
 using api.Repositories;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +14,7 @@ namespace api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [DisableCors]
     public class UsersController : ControllerBase
     {
         private readonly ILogger<TeamsController> _logger;
@@ -31,6 +34,7 @@ namespace api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles ="CEO")]
         public async Task<ActionResult<ICollection<GetAllUsersDto>>> GetUsers()
         {
 

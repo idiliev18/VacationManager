@@ -25,8 +25,8 @@ namespace api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult> Register([FromBody] RegisterUserDto registerUserDto)
         {
-            var errors = await _authenticationManager.RegisterUser(registerUserDto);
             _logger.LogInformation($"Kondio {registerUserDto.Useraname}");
+            var errors = await _authenticationManager.RegisterUser(registerUserDto);
             
             if(errors.Any())
             {
